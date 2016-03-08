@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 
 
-class SaveAll(BaseCommand):
+class Command(BaseCommand):
     args = '<model_name model_name ...>'
     help = 'Gets all model instances and saves it.'
 
