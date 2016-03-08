@@ -14,14 +14,13 @@ class Command(BaseCommand):
                 self.stdout.write('There is no model named "%s".' % name)
             return
 
-        for model_list in MODELS:
+        for model in MODELS:
             for names in args:
                 for name in names:
-                    if name == model_list.__name__:
-                        model = model_list
-                        foo = model.objects.all()
+                    if name == model.__name__:
+                        objects = model.objects.all()
 
-                        for obj in foo:
+                        for obj in objects:
                             obj.save()
 
                         self.stdout.write('Successfully saved "%s" instances.' % model)
