@@ -12,7 +12,8 @@ class Command(BaseCommand):
             except model.DoesNotExist:
                 raise CommandError('Model %s does not exist.' % model)
 
-            foo.save()
+            for obj in foo:
+                obj.save()
 
             self.stdout.write('Successfully saved "%s" instances.' % model)
 
