@@ -1,4 +1,7 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
+from saver.models import Pessoa, Raca, Animal
+
+MODELS = [Pessoa, Raca, Animal]
 
 
 class Command(BaseCommand):
@@ -6,15 +9,28 @@ class Command(BaseCommand):
     help = 'Gets all model instances and saves it.'
 
     def handle(self, *args, **options):
-        for model in args:
-            try:
-                foo = model.objects.all()
-            except model.DoesNotExist:
-                raise CommandError('Model %s does not exist.' % model)
+        if not self.validate_args(args):
+            for name in args:
+                self.stdout.write('There is no model named "%s".' % name)
+            return
 
-            for obj in foo:
-                obj.save()
+        for model_list in MODELS:
+            for names in args:
+                for name in names:
+                    if name == model_list.__name__:
+                        model = model_list
+                        foo = model.objects.all()
 
-            self.stdout.write('Successfully saved "%s" instances.' % model)
+                        for obj in foo:
+                            obj.save()
+
+                        self.stdout.write('Successfully saved "%s" instances.' % model)
 
         self.stdout.write('All instances saved.')
+
+    def validate_args(self, *args):
+        for model in MODELS:
+            for name in args:
+                if name[0] == model.__name__:
+                    return True
+        return False
