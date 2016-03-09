@@ -18,6 +18,11 @@ class CommandsTest(TestCase):
         call_command('saveall', 'saver.Pessoa', stdout=out)
         self.assertIn('All instances saved.', out.getvalue())
 
+    def test_saveall_command_all_option(self):
+        out = StringIO()
+        call_command('saveall', all=True, stdout=out)
+        self.assertIn('All instances from all models saved.', out.getvalue())
+
     def test_saveall_command_multiple_models(self):
         out = StringIO()
         call_command('saveall', 'saver.Animal', 'saver.Raca', stdout=out)
