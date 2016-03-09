@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
-from saver.models import Pessoa, Raca, Animal
+from django.db import models
 
-MODELS = [Pessoa, Raca, Animal]
+MODELS = models.Model.__subclasses__()
 
 
 class Command(BaseCommand):
@@ -29,7 +29,8 @@ class Command(BaseCommand):
 
     def validate_args(self, *args):
         for model in MODELS:
-            for name in args:
-                if name[0] == model.__name__:
-                    return True
+            for names in args:
+                for name in names:
+                    if name == model.__name__:
+                        return True
         return False
