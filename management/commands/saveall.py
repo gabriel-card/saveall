@@ -13,33 +13,45 @@ class Command(BaseCommand):
             action='store_true',
             dest='all',
             default=False,
-            help='Gets all instances from all models and saves it.'
+            help='Gets all instances from all models in project and saves it.'
+        ),
+        make_option(
+            '--app',
+            action='store_true',
+            dest='app',
+            default=False,
+            help='Gets all instances from all models in one or more apps and saves it.'
         ),
     )
 
     def handle(self, *args, **options):
         if options['all']:
-            models = apps.get_models()
-
-            for model in models:
-                objects = model.objects.all()
-
-                for obj in objects:
-                    obj.save()
-
+            self.save_objects(apps.get_models())
             return self.stdout.write("All instances from all models saved.")
 
-        try:
+        if options['app']:
             for name in args:
-                objects = apps.get_model(name).objects.all()
+                self.save_objects(apps.get_models(apps.get_app(name)))
 
-                for obj in objects:
-                    obj.save()
+            return self.stdout.write('All instances from all models in "%s" saved.' % args)
 
-                self.stdout.write('Successfully saved "%s" instances.' % name)
+        try:
+            self.save_objects(args)
 
         except LookupError:
-            return self.stdout.write("Can't find '%s' model." % name)
+            return self.stdout.write("Can't find '%s' model." % args)
 
         else:
             self.stdout.write('All instances saved.')
+
+    def save_objects(self, models):
+        for model in models:
+            if isinstance(model, str):
+                objects = apps.get_model(model).objects.all()
+            else:
+                objects = model.objects.all()
+
+            for obj in objects:
+                obj.save()
+
+            self.stdout.write('Successfully saved "%s" instances.' % model)
