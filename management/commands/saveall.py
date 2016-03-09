@@ -1,36 +1,23 @@
 from django.core.management.base import BaseCommand
-from django.db import models
-
-MODELS = models.Model.__subclasses__()
+from django.apps import apps
 
 
 class Command(BaseCommand):
-    args = '<model_name model_name ...>'
+    args = '<app.model_name app.model_name ...>'
     help = 'Gets all model instances and saves it.'
 
     def handle(self, *args, **options):
-        if not self.validate_args(args):
+        try:
             for name in args:
-                self.stdout.write('There is no model named "%s".' % name)
-            return
+                objects = apps.get_model(name).objects.all()
 
-        for model in MODELS:
-            for names in args:
-                for name in names:
-                    if name == model.__name__:
-                        objects = model.objects.all()
+                for obj in objects:
+                    obj.save()
 
-                        for obj in objects:
-                            obj.save()
+                self.stdout.write('Successfully saved "%s" instances.' % name)
 
-                        self.stdout.write('Successfully saved "%s" instances.' % model)
+        except LookupError:
+            return self.stdout.write("Can't find '%s' model." % name)
 
-        self.stdout.write('All instances saved.')
-
-    def validate_args(self, *args):
-        for model in MODELS:
-            for names in args:
-                for name in names:
-                    if name == model.__name__:
-                        return True
-        return False
+        else:
+            self.stdout.write('All instances saved.')

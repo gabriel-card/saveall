@@ -15,15 +15,15 @@ class CommandsTest(TestCase):
 
     def test_saveall_command(self):
         out = StringIO()
-        call_command('saveall', 'Pessoa', stdout=out)
+        call_command('saveall', 'saver.Pessoa', stdout=out)
         self.assertIn('All instances saved.', out.getvalue())
 
     def test_saveall_command_multiple_models(self):
         out = StringIO()
-        call_command('saveall', 'Animal', 'Raca', stdout=out)
+        call_command('saveall', 'saver.Animal', 'saver.Raca', stdout=out)
         self.assertIn('All instances saved.', out.getvalue())
 
     def test_saveall_command_table_doesnt_exist(self):
         out = StringIO()
-        call_command('saveall', 'alibaba', stdout=out)
-        self.assertIn('There is no model named "alibaba".', out.getvalue())
+        call_command('saveall', 'saver.alibaba', stdout=out)
+        self.assertIn("Can't find 'saver.alibaba' model.", out.getvalue())
