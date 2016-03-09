@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.core.exceptions import ImproperlyConfigured
 from django.apps import apps
 from optparse import make_option
 
@@ -30,8 +31,11 @@ class Command(BaseCommand):
             return self.stdout.write("All instances from all models saved.")
 
         if options['app']:
-            for name in args:
-                self.save_objects(apps.get_models(apps.get_app(name)))
+            try:
+                for name in args:
+                    self.save_objects(apps.get_models(apps.get_app(name)))
+            except ImproperlyConfigured:
+                return self.stdout.write("Can't find '%s' app." % args)
 
             return self.stdout.write('All instances from all models in "%s" saved.' % args)
 
