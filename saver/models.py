@@ -3,6 +3,8 @@ from django.db import models
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=30)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.nome
@@ -13,6 +15,8 @@ class Pessoa(models.Model):
 
 class Raca(models.Model):
     nome_raca = models.CharField(max_length=30)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.nome_raca
@@ -23,6 +27,8 @@ class Raca(models.Model):
 
 class Animal(models.Model):
     nome = models.CharField(max_length=30)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     dono = models.ForeignKey(Pessoa)
     raca = models.ForeignKey(Raca)
 

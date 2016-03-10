@@ -42,3 +42,25 @@ class CommandsTest(TestCase):
         out = StringIO()
         call_command('saveall', 'saver.alibaba', stdout=out)
         self.assertIn("Can't find 'saver.alibaba' model.", out.getvalue())
+
+
+class ModelsIntegrityTest(TestCase):
+    def setUp(self):
+        p1 = Pessoa.objects.create(nome="Gabriel")
+        r1 = Raca.objects.create(nome_raca="Golden")
+        a1 = Animal.objects.create(nome="Arthas", dono=p1, raca=r1)
+        p1.save()
+        r1.save()
+        a1.save()
+
+    def test_integrity_saveall_command_create_update_datetime(self):
+        created = Pessoa.objects.filter(pk=1).values('created')[0]['created']
+        old_updated = Pessoa.objects.filter(pk=1).values('updated')[0]['updated']
+
+        call_command('saveall', 'saver.Pessoa', stdout=StringIO())
+
+        new_created = Pessoa.objects.filter(pk=1).values('created')[0]['created']
+        new_updated = Pessoa.objects.filter(pk=1).values('updated')[0]['updated']
+
+        self.assertNotEqual(old_updated, new_updated)
+        self.assertEqual(created, new_created)
