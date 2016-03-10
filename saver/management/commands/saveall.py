@@ -37,7 +37,7 @@ class Command(BaseCommand):
             except ImproperlyConfigured:
                 return self.stdout.write("Can't find '%s' app." % args)
 
-            return self.stdout.write('All instances from all models in "%s" saved.' % args)
+            return self.stdout.write('All instances from all models in "%s" saved.' % ', '.join(args))
 
         try:
             self.save_objects(args)
