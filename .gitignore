@@ -1,3 +1,5 @@
 *.pyc
 example_project/db.sqlite3
 .DS_Store
+django_saveall.egg-info
+dist
