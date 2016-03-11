@@ -1,9 +1,13 @@
 ## django-saveall
 ###  custom django-admin command for saving model instances throughout a project
 
-Requirements:
+#### Requirements:
 * Python == 2.7
 * django = 1.7.7
+
+#### How to install:
+* Run `pip install django-saveall`;
+* Add `'saveall'` to INSTALLED_APPS inside your settings.py 
 
 #### How to use:<br>
 * You can call the command using `python manage.py saveall <app.model>` or `python manage.py saveall --<option> <args>`;<br><br>
