@@ -27,10 +27,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['all']:
-            self.save_objects(apps.get_models())
-            return self.stdout.write("All instances from all models saved.")
+            models = apps.get_models()
+            feedback = "All instances from all models saved."
 
-        if options['app']:
+        elif options['app']:
             apps_list = options['app']
             try:
                 models_list = []
@@ -41,22 +41,24 @@ class Command(BaseCommand):
                 return self.stdout.write("Can't find '%s' app." % ', '.join(apps_list))
 
             else:
-                for models in models_list:
-                    self.save_objects(models)
+                models = [item for sublist in models_list for item in sublist]
 
-                return self.stdout.write('All instances from all models in "%s" saved.' % ', '.join(apps_list))
-
-        try:
-            models = []
-            for model in args:
-                models.append(apps.get_model(model))
-
-        except LookupError:
-            return self.stdout.write("Can't find '%s' model." % args)
+                feedback = 'All instances from all models in "%s" saved.' % ', '.join(apps_list)
 
         else:
-            self.save_objects(models)
-            return self.stdout.write('All instances saved.')
+            try:
+                models = []
+                for model in args:
+                    models.append(apps.get_model(model))
+
+            except LookupError:
+                return self.stdout.write("Can't find '%s' model." % args)
+
+            else:
+                feedback = 'All instances saved.'
+
+        self.save_objects(models)
+        return self.stdout.write(feedback)
 
     def save_objects(self, models):
         for model in models:
