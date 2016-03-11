@@ -1,3 +1,4 @@
 include LICENSE
 include README.rst
+recursive-include saveall/management *
 recursive-include saveall/management/commands *
