@@ -34,13 +34,17 @@ class Command(BaseCommand):
             try:
                 for name in args:
                     self.save_objects(apps.get_models(apps.get_app(name)))
+
             except ImproperlyConfigured:
                 return self.stdout.write("Can't find '%s' app." % args)
 
             return self.stdout.write('All instances from all models in "%s" saved.' % ', '.join(args))
 
         try:
-            self.save_objects(args)
+            models = []
+            for model in args:
+                models.append(apps.get_model(model))
+                self.save_objects(models)
 
         except LookupError:
             return self.stdout.write("Can't find '%s' model." % args)
@@ -50,10 +54,7 @@ class Command(BaseCommand):
 
     def save_objects(self, models):
         for model in models:
-            if isinstance(model, str):
-                objects = apps.get_model(model).objects.all()
-            else:
-                objects = model.objects.all()
+            objects = model.objects.all()
 
             for obj in objects:
                 obj.save()
