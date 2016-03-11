@@ -18,7 +18,7 @@ class Command(BaseCommand):
         ),
         make_option(
             '--app',
-            action='store_true',
+            action='store',
             dest='app',
             default=False,
             help='Gets all instances from all models in one or more apps and saves it.'
@@ -31,26 +31,32 @@ class Command(BaseCommand):
             return self.stdout.write("All instances from all models saved.")
 
         if options['app']:
+            apps_list = options['app']
             try:
-                for name in args:
-                    self.save_objects(apps.get_models(apps.get_app(name)))
+                models_list = []
+                for name in apps_list:
+                    models_list.append(apps.get_models(apps.get_app(name)))
 
             except ImproperlyConfigured:
-                return self.stdout.write("Can't find '%s' app." % args)
+                return self.stdout.write("Can't find '%s' app." % ', '.join(apps_list))
 
-            return self.stdout.write('All instances from all models in "%s" saved.' % ', '.join(args))
+            else:
+                for models in models_list:
+                    self.save_objects(models)
+
+                return self.stdout.write('All instances from all models in "%s" saved.' % ', '.join(apps_list))
 
         try:
             models = []
             for model in args:
                 models.append(apps.get_model(model))
-                self.save_objects(models)
 
         except LookupError:
             return self.stdout.write("Can't find '%s' model." % args)
 
         else:
-            self.stdout.write('All instances saved.')
+            self.save_objects(models)
+            return self.stdout.write('All instances saved.')
 
     def save_objects(self, models):
         for model in models:

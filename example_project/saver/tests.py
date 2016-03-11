@@ -36,17 +36,17 @@ class CommandsTest(TestCase):
 
     def test_saveall_command_app_option(self):
         out = StringIO()
-        call_command('saveall', 'saver', app=True, stdout=out)
+        call_command('saveall', app=['saver'], stdout=out)
         self.assertIn('All instances from all models in "saver" saved.', out.getvalue())
 
     def test_saveall_command_multiple_apps_option(self):
         out = StringIO()
-        call_command('saveall', 'saver', 'generic', app=True, stdout=out)
+        call_command('saveall', app=['saver', 'generic'], stdout=out)
         self.assertIn('All instances from all models in "saver, generic" saved.', out.getvalue())
 
     def test_saveall_command_app_option_doesnt_exist(self):
         out = StringIO()
-        call_command('saveall', 'aeho', app=True, stdout=out)
+        call_command('saveall', app=['aeho'], stdout=out)
         self.assertIn("Can't find 'aeho' app.", out.getvalue())
 
     def test_saveall_command_multiple_models(self):
