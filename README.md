@@ -10,16 +10,16 @@
 * Add `'saveall'` to INSTALLED_APPS inside your settings.py 
 
 #### How to use:<br>
-* You can call the command using `python manage.py saveall <app.model>` or `python manage.py saveall --<option> <args>`;<br><br>
+* You can call the command using `python manage.py saveall <app.Model>` or `python manage.py saveall --<option> <args>`;<br><br>
 * Options available:
   * `--app <app_name>`: accepts multiple arguments, saves all instances from all models inside specific app(s);
   * `--all`: accepts no arguments, saves all instances from all models inside project;
 
 #### Saving instances from specific models:
 * By default, the command accepts as argument the path of the model you want the instances to be saved. e.g.:
-  * `python manage.py saveall app01.model01`
+  * `python manage.py saveall app01.Model01`
 * It accepts multiple paths as well:
-  * `python manage.py saveall app01.model01 app02.model02 app03.model03`
+  * `python manage.py saveall app01.Model01 app02.Model02 app03.Model03`
 
 #### Saving instances from all models inside an app:
 * Using the `--app` option, the command will accept as argument solely the name of the app, and will save every instance from every model:
