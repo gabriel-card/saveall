@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Pessoa(models.Model):
+class Table01(models.Model):
     nome = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -10,30 +10,30 @@ class Pessoa(models.Model):
         return self.nome
 
     class Meta:
-        verbose_name = 'pessoa'
+        verbose_name = 'table01'
 
 
-class Raca(models.Model):
-    nome_raca = models.CharField(max_length=30)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __unicode__(self):
-        return self.nome_raca
-
-    class Meta:
-        verbose_name = 'raca'
-
-
-class Animal(models.Model):
+class Table02(models.Model):
     nome = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    dono = models.ForeignKey(Pessoa)
-    raca = models.ForeignKey(Raca)
 
     def __unicode__(self):
         return self.nome
 
     class Meta:
-        verbose_name = 'animal'
+        verbose_name = 'table02'
+
+
+class Table03(models.Model):
+    nome = models.CharField(max_length=30)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    dono = models.ForeignKey(Table01)
+    raca = models.ForeignKey(Table02)
+
+    def __unicode__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = 'table03'

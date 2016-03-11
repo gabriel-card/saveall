@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.utils.six import StringIO
 from django.core.management import call_command
-from saver.models import Pessoa, Animal, Raca
+from saver.models import Table01, Table02, Table03
 from generic.models import Table_01, Table_02, Table_03, Table_04
 
 
@@ -10,9 +10,9 @@ class CommandsTest(TestCase):
     def setUp(self):
         self.out = StringIO()
 
-        p1 = Pessoa.objects.create(nome="Gabriel")
-        r1 = Raca.objects.create(nome_raca="Golden")
-        Animal.objects.create(nome="Arthas", dono=p1, raca=r1)
+        p1 = Table01.objects.create(nome="row01tb01")
+        r1 = Table02.objects.create(nome="row01tb02")
+        Table03.objects.create(nome="row01tb03", dono=p1, raca=r1)
 
         t11 = Table_01.objects.create(nome="row1table1")
         t21 = Table_02.objects.create(nome="row1table2")
@@ -20,7 +20,7 @@ class CommandsTest(TestCase):
         Table_04.objects.create(nome="row1table4")
 
     def test_saveall_command(self):
-        call_command('saveall', 'saver.Pessoa', stdout=self.out)
+        call_command('saveall', 'saver.Table01', stdout=self.out)
         self.assertIn('All instances saved.', self.out.getvalue())
 
     def test_saveall_command_all_option(self):
@@ -40,9 +40,9 @@ class CommandsTest(TestCase):
         self.assertIn("Can't find 'aeho' app.", self.out.getvalue())
 
     def test_saveall_command_multiple_models(self):
-        call_command('saveall', 'saver.Animal', 'saver.Raca', stdout=self.out)
+        call_command('saveall', 'saver.Table01', 'saver.Table02', stdout=self.out)
         self.assertIn('All instances saved.', self.out.getvalue())
 
     def test_saveall_command_table_doesnt_exist(self):
-        call_command('saveall', 'saver.alibaba', stdout=self.out)
-        self.assertIn("Can't find 'saver.alibaba' model.", self.out.getvalue())
+        call_command('saveall', 'saver.wrongtable', stdout=self.out)
+        self.assertIn("Can't find 'saver.wrongtable' model.", self.out.getvalue())
