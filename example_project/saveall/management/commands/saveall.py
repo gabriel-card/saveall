@@ -68,3 +68,4 @@ class Command(BaseCommand):
                 obj.save()
 
             self.stdout.write('Successfully saved "%s" instances.' % model)
+
