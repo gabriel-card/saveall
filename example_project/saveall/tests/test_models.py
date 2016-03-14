@@ -8,9 +8,9 @@ class ModelsIntegrityTest(TestCase):
 
     def setUp(self):
         self.out = StringIO()
-        p1 = Table01.objects.create(nome="row01tb01")
-        r1 = Table02.objects.create(nome="row01tb02")
-        Table03.objects.create(nome="row01tb03", dono=p1, raca=r1)
+        self.p1 = Table01.objects.create(nome="row01tb01")
+        self.r1 = Table02.objects.create(nome="row01tb02")
+        self.a1 = Table03.objects.create(nome="row01tb03", dono=self.p1, raca=self.r1)
 
     def test_integrity_saveall_command_create_update_datetime(self):
         created = Table01.objects.filter(pk=1).values('created')[0]['created']
@@ -23,3 +23,8 @@ class ModelsIntegrityTest(TestCase):
 
         self.assertNotEqual(old_updated, new_updated)
         self.assertEqual(created, new_created)
+
+    def test_unicode_return(self):
+        self.assertEqual(self.p1.__unicode__(), "row01tb01")
+        self.assertEqual(self.r1.__unicode__(), "row01tb02")
+        self.assertEqual(self.a1.__unicode__(), "row01tb03")
