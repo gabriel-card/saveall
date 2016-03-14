@@ -1,6 +1,6 @@
 .. image:: https://travis-ci.org/gabriel-card/saveall.svg?branch=master
     :target: https://travis-ci.org/gabriel-card/saveall
-.. image:: https://coveralls.io/repos/github/gabriel-card/saveall/badge.svg?ts=1 :target: https://coveralls.io/github/gabriel-card/saveall
+.. image:: https://coveralls.io/repos/github/gabriel-card/saveall/badge.svg :target: https://coveralls.io/r/gabriel-card/saveall
 
 django-saveall
 --------------
