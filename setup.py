@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-saveall',
-    version='0.1.3',
+    version='0.1.4',
     packages=['saveall'],
     include_package_data=True,
     license='MIT License',
