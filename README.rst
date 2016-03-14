@@ -1,6 +1,6 @@
 .. image:: https://travis-ci.org/gabriel-card/saveall.svg?branch=master
     :target: https://travis-ci.org/gabriel-card/saveall
-.. image:: https://coveralls.io/repos/github/gabriel-card/saveall/badge.svg?branch=master :target: https://coveralls.io/github/gabriel-card/saveall?branch=master
+.. image:: https://coveralls.io/repos/github/gabriel-card/saveall/badge.svg?ts=1 :target: https://coveralls.io/github/gabriel-card/saveall?branch=master
 
 django-saveall
 --------------
@@ -12,7 +12,7 @@ Requirements:
 ^^^^^^^^^^^^^
 
 -  Python == 2.7
--  django = 1.7.7
+-  django == 1.7.7
 
 How to install:
 ^^^^^^^^^^^^^^^
