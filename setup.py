@@ -29,4 +29,5 @@ setup(
         'Topic :: Database',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+    test_suite='runtests.runtests',
 )
