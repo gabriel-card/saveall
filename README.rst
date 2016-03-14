@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/gabriel-card/saveall.svg?branch=master
+    :target: https://travis-ci.org/gabriel-card/saveall
+
 django-saveall
 --------------
 
