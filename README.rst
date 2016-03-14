@@ -13,7 +13,7 @@ Requirements:
 ^^^^^^^^^^^^^
 
 -  Python == 2.7
--  django == 1.7.7
+-  django == 1.7.7 to 1.8.11
 
 How to install:
 ^^^^^^^^^^^^^^^
