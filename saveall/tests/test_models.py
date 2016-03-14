@@ -10,7 +10,7 @@ class ModelsIntegrityTest(TestCase):
         self.out = StringIO()
         self.p1 = Table01.objects.create(nome="row01tb01")
         self.r1 = Table02.objects.create(nome="row01tb02")
-        self.a1 = Table03.objects.create(nome="row01tb03", dono=p1, raca=r1)
+        self.a1 = Table03.objects.create(nome="row01tb03", dono=self.p1, raca=self.r1)
 
     def test_integrity_saveall_command_create_update_datetime(self):
         created = Table01.objects.filter(pk=1).values('created')[0]['created']
