@@ -31,7 +31,7 @@ class Command(BaseCommand):
             feedback = "All instances from all models saved."
 
         elif options['app']:
-            apps_list = options['app']
+            apps_list = options['app'].split()
             try:
                 models_list = []
                 for name in apps_list:
