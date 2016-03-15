@@ -9,7 +9,7 @@ django-saveall
 custom django-admin command for saving model instances throughout a project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Changelog_.
+Changelog_
 ^^^^^^^^^
 .. _Changelog: CHANGELOG.md
 
