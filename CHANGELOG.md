@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Added changelog.
 
-## [0.1.5] - 2015-12-03
+## [0.1.5] - 2016-03-15
 ### Fixed
 - Fixed a bug where `--app <args>` would not work properly. It should now be working seemlessly.
 - Removed unnecessary imports from views/models.
